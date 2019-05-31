@@ -11,4 +11,4 @@ class TestMain(unittest.TestCase):
             ("yodeling_kid.avi", 605, 12),
         ]
         correct_answer = (22, {"sad_pepe_compilation.gif", "yodeling_kid.avi"})
-        self.assertEqual(main.calculate(usb_size, memes), correct_answer)
+        self.assertEqual(correct_answer, main.calculate(usb_size, memes))

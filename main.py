@@ -26,23 +26,28 @@ class USBStick:
     def __init__(self, capacity: int):
         self.__capacity = capacity
         self.__free_space = capacity
+        self.__price_of_memes = 0
         self.__memes = []
 
     def add_mem(self, mem: Meme):
         if self.__free_space > mem.size:
             self.__memes.append(mem)
+            self.__price_of_memes += mem.price
+            self.__free_space -= mem.size
             return True
         else:
             return False
 
-    def price_of_memes(self):
-        price_of_memes = 0
-        for mem in self.__memes:
-            price_of_memes += mem.price
+    def give_content(self):
+        return self.price_of_memes, {x.name for x in self.__memes}
 
     @property
     def capacity(self):
         return self.capacity
+
+    @property
+    def price_of_memes(self):
+        return self.__price_of_memes
 
 
 def calculate(usb_size: int, memes: list):
@@ -53,5 +58,12 @@ def calculate(usb_size: int, memes: list):
             memes_list.append(Meme(mem[0], mem[1], mem[2]))
         except ValueError:
             print("Error. Something wrong with mem info. Wrong value.")
+
     # Algorithm inspired with Knapsack problem
-    memes_list.sorted(key=lambda x: x.weight)  # sort memes by weight
+    memes_list.sort(key=lambda x: x.weight, reverse=False)
+    for mem in memes_list:
+        print(mem.size, mem.weight)
+    for mem in memes_list:
+        usb_stick.add_mem(mem)
+
+    return usb_stick.give_content()

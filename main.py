@@ -101,7 +101,7 @@ def calculate(usb_size: int, memes: List[Tuple[str, int, int]]) -> Tuple[int, Se
     """Function calculate return the most profitable set of given memes list.
 
     Algorithm:
-        Chosen algorithm is ...
+        Chosen algorithm is dynamic programming.
 
     Args:
         usb_size (int): USB stick's size in MiB.
@@ -144,4 +144,4 @@ def calculate(usb_size: int, memes: List[Tuple[str, int, int]]) -> Tuple[int, Se
                     for mem in sticks[i - 1][j].memes:
                         sticks[i][j].add_mem(mem)
 
-    return sticks[len(memes_list)][usb_size * 1024].give_content()
+    return sticks[len(memes_list)][usb_size * 1024].give_content()  # in these indexes of matrix is solution

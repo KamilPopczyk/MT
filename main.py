@@ -2,28 +2,46 @@ from typing import List, Tuple, Set
 
 
 class Meme:
-    """"Class represtens mem info"""
+    """Meme class represents basic mem info.
 
-    def __init__(self, name, size, price):
+    The __init__ method get info about mem: name, size and price.
+
+    Args:
+        name (str): Meme's name.
+        size (int): Size of meme in MiB.
+        price (int): Meme's price.
+    """
+
+    def __init__(self, name: str, size: int, price: int):
         self.__name = name
         self.__size = size
         self.__price = price
 
     @property
-    def name(self):
+    def name(self) -> str:
+        """str: Return meme's name."""
         return self.__name
 
     @property
-    def size(self):
+    def size(self) -> int:
+        """int: Return meme's size."""
         return self.__size
 
     @property
-    def price(self):
+    def price(self) -> int:
+        """int: Return meme's price."""
         return self.__price
 
 
 class USBStick:
-    """"Class represents usb stick"""
+    """USBStick class represents usb stick. It work as 'real' usb stick,
+    because can 'store' data -> memes.
+
+    The __init__ method get info about usb stick: capacity.
+
+    Args:
+        capacity (int): USB stick's capacity in MiB.
+    """
 
     def __init__(self, capacity: int):
         self.__capacity = capacity
@@ -31,7 +49,8 @@ class USBStick:
         self.__price_of_memes = 0
         self.__memes = []
 
-    def add_mem(self, mem: Meme):
+    def add_mem(self, mem: Meme) -> bool:
+        """bool: If usb stick has free space, add new mem. Return True if success."""
         if self.__free_space > mem.size:
             if mem not in self.memes:
                 self.__memes.append(mem)
@@ -41,37 +60,58 @@ class USBStick:
         else:
             return False
 
-    def give_content(self):
+    def give_content(self) -> Tuple:
+        """Tuple: Return tuple of price of all memes and list of stored memes."""
         return self.price_of_memes, {x.name for x in self.__memes}
 
     def replace_memes(self, memes: list):
+        """Copy data from another usb stick."""
         self.format()
         for mem in memes:
             self.add_mem(mem)
 
     def format(self):
+        """Clear all stored data in usb stick."""
         self.__memes.clear()
         self.__price_of_memes = 0
         self.__free_space = self.__capacity
 
     @property
-    def memes(self):
+    def memes(self) -> List:
+        """List: Return list of stored memes."""
         return self.__memes
 
     @property
-    def capacity(self):
+    def capacity(self) -> int:
+        """int: Return usb stick's capacity."""
         return self.__capacity
 
     @property
-    def free_space(self):
+    def free_space(self) -> int:
+        """int: Return left free space."""
         return self.__free_space
 
     @property
-    def price_of_memes(self):
+    def price_of_memes(self) -> int:
+        """int: Return summary price of stored memes."""
         return self.__price_of_memes
 
 
 def calculate(usb_size: int, memes: List[Tuple[str, int, int]]) -> Tuple[int, Set[str]]:
+    """Function calculate return the most profitable set of given memes list.
+
+    Algorithm:
+        Chosen algorithm is ...
+
+    Args:
+        usb_size (int): USB stick's size in MiB.
+        memes (List(Tuple(str,int,int)): List of memes'tuples with info about meme.
+
+    Returns:
+        Function returns Tuple of two elements:
+            (int) price of all chosen memes.
+            (Set) set of name of all chosen memes.
+    """
     memes_list = []
     for mem in memes:
         try:

@@ -112,12 +112,10 @@ def calculate(usb_size: int, memes: List[Tuple[str, int, int]]) -> Tuple[int, Se
             (int) price of all chosen memes.
             (Set) set of name of all chosen memes.
     """
-    memes_list = []
-    for mem in memes:
-        try:
-            memes_list.append(Meme(mem[0], mem[1], mem[2]))
-        except ValueError:
-            print("Error. Something wrong with mem info. Wrong value.")
+
+    memes_list = [
+        Meme(mem[0], mem[1], mem[2]) for mem in memes
+    ]  # new list of objects of memes
 
     # Algorithm inspired with Knapsack problem
     # Dynamic programming
